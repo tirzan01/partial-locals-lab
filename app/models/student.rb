@@ -13,4 +13,12 @@
 class Student < ActiveRecord::Base
   has_many :classroom_students
   has_many :classrooms, through: :classroom_students
+
+  def self.search(query)
+    unless query || query.blank?
+      self.all
+    else
+      self.all.select{ |s| s.name.include?(query.titlecase)}
+    end
+  end
 end
